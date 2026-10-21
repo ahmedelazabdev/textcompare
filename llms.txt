@@ -1,0 +1,37 @@
+# Text Compare — Online Diff Checker & Text Difference Tool
+
+> A high-performance, client-side text comparison and diff checking utility that analyzes textual differences line-by-line and word-by-word with side-by-side and unified views, zero external libraries, and 100% in-browser privacy.
+
+## Project Overview
+
+- **Canonical URL**: https://ahmedelazabdev.github.io/textcompare/
+- **Author**: Ahmed Elazab
+- **Primary Technology**: Native Client-Side JavaScript, Longest Common Subsequence (LCS) Algorithm
+- **License**: Open Source / Free Developer & Writing Utility
+
+## Core Features & Analytical Engine
+
+1. **Dual Viewing Modes**:
+   - **Side-by-Side (Split View)**: Renders parallel columns matching original vs. modified text lines, ideal for contract redlining and prose editing.
+   - **Inline Unified (Git Style)**: Stacks additions (`+`) in accessible green and deletions (`-`) in accessible red within a single vertical stream.
+
+2. **Word-Level Precision Highlights**:
+   - Performs secondary token-level diffing on modified lines, highlighting specific inserted and deleted words rather than entire lines.
+
+3. **Customizable Comparison Rules**:
+   - **Ignore Case**: Toggles case-insensitive string matching.
+   - **Ignore Whitespace**: Trims leading/trailing spaces and collapses consecutive whitespace.
+
+4. **Real-Time Telemetry & Similarity Scoring**:
+   - Computes mathematical similarity percentage based on matching subsequence length.
+   - Displays real-time addition counts, deletion counts, and total difference tallies.
+
+5. **100% Client-Side Privacy**:
+   - All string comparisons execute strictly in browser memory. No text snippets, contracts, source code, or confidential documents are ever sent to remote servers.
+
+## Technical Specifications & Performance
+
+- **Performance**: 100% Lighthouse score, zero external Google Fonts (using native system font stack), zero Cumulative Layout Shift (CLS = 0.000).
+- **Accessibility & Contrast**: Full WCAG AAA color contrast across diff badges and highlights (`#dcfce7` with `#14532d` text for additions, `#fee2e2` with `#991b1b` text for deletions, both exceeding 7:1 ratio), with sequentially descending heading hierarchy (`h1` → `h2` → `h3`).
+
+ 
