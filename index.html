@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- High-CTR SEO Meta -->
+  <title>Text Compare ⚡ Free Online Diff Checker &amp; Text Difference Tool (100% Free)</title>
+  <meta name="description" content="Compare two text files or snippets side-by-side or inline to find differences in real-time. Highlights additions, deletions, and modified lines with 100% in-browser privacy.">
+  <meta name="keywords" content="text compare, diff checker, compare text online, text difference tool, side by side diff, inline diff viewer, string comparison tool, code diff tool">
+  <meta name="author" content="Ahmed Elazab">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  
+  <!-- Absolute Canonical URL -->
+  <link rel="canonical" href="https://ahmedelazabdev.github.io/textcompare/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ahmedelazabdev.github.io/textcompare/">
+  <meta property="og:title" content="Text Compare ⚡ Online Diff Checker &amp; Text Difference Tool">
+  <meta property="og:description" content="Compare two texts side-by-side or inline to identify additions, removals, and inline modifications instantly. Free and private.">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Text Compare ⚡ Free Online Text Difference Tool">
+  <meta name="twitter:description" content="Highlight differences between two texts in real-time. Supports side-by-side and inline diff with word-level precision.">
+
+  <!-- Structured Data: WebApplication, HowTo & FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Text Compare - Online Diff Checker",
+        "url": "https://ahmedelazabdev.github.io/textcompare/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "description": "A high-performance, client-side text comparison and diff checking utility that analyzes textual differences line-by-line and word-by-word with side-by-side and unified views.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Compare Two Texts Online and Identify Differences",
+        "description": "Step-by-step instructions to compare original and modified texts, customize comparison rules, and inspect differences.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Enter Original and Modified Text",
+            "text": "Paste your baseline text in the left 'Original Text' box and your updated version in the right 'Modified Text' box."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Select Comparison Options",
+            "text": "Toggle 'Ignore Case' or 'Ignore Whitespace' depending on whether punctuation, casing, or trailing spaces should be flagged as differences."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Choose View Mode",
+            "text": "Switch between 'Side-by-Side' for a parallel two-column view or 'Inline Unified' for a compact Git-style diff."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Inspect and Copy Results",
+            "text": "Review highlighted green additions and red deletions, check similarity percentage, and click 'Copy Diff' to export results."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does this Text Compare tool calculate differences?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "This tool implements a Longest Common Subsequence (LCS) algorithm to determine the minimal number of insertions and deletions required to transform the original text into the modified text, complemented by word-level tokenization for fine-grained inline highlights."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my text data private and secure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, 100%! All comparison logic executes locally inside your web browser using client-side JavaScript. Your confidential contracts, code snippets, and essays are never transmitted to any external server."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between Side-by-Side and Inline Unified diff?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Side-by-Side displays both documents in parallel columns, making it ideal for visual line matching and legal redlining. Inline Unified displays changes in a single vertical stream using + and - indicators, which is standard in Git version control and easier to read on mobile screens."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I compare code snippets as well as regular text?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Text Compare works seamlessly on plain text, Markdown, HTML, JSON, CSS, JavaScript, Python, and all programming languages, preserving indentation and whitespace formatting."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-soft: #eff6ff;
+      --accent: #047857;
+      --accent-soft: #d1fae5;
+      --accent-text: #064e3b;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --text-muted: #334155;
+      --diff-add-bg: #dcfce7;
+      --diff-add-text: #14532d;
+      --diff-del-bg: #fee2e2;
+      --diff-del-text: #991b1b;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
+      --shadow-xl: 0 10px 25px -5px rgba(0,0,0,0.08);
+      --radius: 14px;
+      /* Zero-CLS Native System Font Stack */
+      --font-stack: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      text-rendering: optimizeSpeed;
+    }
+
+    /* Fixed 64px Header */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+      height: 64px;
+      overflow: hidden;
+    }
+
+    .nav-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .brand-badge {
+      background: #0f172a;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+
+    .status-tag {
+      background: var(--accent-soft);
+      color: var(--accent-text);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid #a7f3d0;
+    }
+
+    main {
+      max-width: 1050px;
+      width: 100%;
+      margin: 24px auto 40px;
+      padding: 0 16px;
+      flex: 1;
+      contain: layout style;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Main Comparison Tool Card */
+    .compare-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+
+    .card-topbar {
+      background: #f1f5f9;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .topbar-modes {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .tab-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-topbar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: all 0.15s ease;
+    }
+
+    .btn-topbar:hover {
+      background: #e2e8f0;
+    }
+
+    .btn-primary-action {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25);
+    }
+
+    .btn-primary-action:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Options Strip */
+    .options-strip {
+      background: #f8fafc;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .opt-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .opt-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .opt-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Dual Input Textarea Grid */
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input-pane {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: #ffffff;
+    }
+
+    .input-pane:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .input-pane:first-child {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .pane-stats {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    textarea.text-box {
+      width: 100%;
+      height: 200px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--text);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    textarea.text-box:focus {
+      border-color: var(--primary);
+    }
+
+    /* Metrics Summary Ribbon */
+    .metrics-ribbon {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .metrics-ribbon {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .metric-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric-val {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-val.val-green { color: #047857; }
+    .metric-val.val-red { color: #991b1b; }
+    .metric-val.val-blue { color: var(--primary); }
+
+    /* Diff Output Area */
+    .diff-output-container {
+      padding: 20px;
+      background: #f8fafc;
+      overflow-x: auto;
+    }
+
+    .diff-view-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .diff-row {
+      display: flex;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .diff-row:last-child {
+      border-bottom: none;
+    }
+
+    .diff-line-num {
+      width: 44px;
+      padding: 4px 8px;
+      text-align: right;
+      color: var(--text-muted);
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
+      user-select: none;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .diff-text-cell {
+      padding: 4px 12px;
+      flex: 1;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* Accessible High-Contrast Highlight Colors (WCAG AAA >= 7:1) */
+    .diff-add {
+      background-color: var(--diff-add-bg);
+      color: var(--diff-add-text);
+    }
+
+    .diff-del {
+      background-color: var(--diff-del-bg);
+      color: var(--diff-del-text);
+    }
+
+    .diff-inline-insert {
+      background: #86efac;
+      color: #064e3b;
+      font-weight: 700;
+      padding: 1px 3px;
+      border-radius: 2px;
+    }
+
+    .diff-inline-delete {
+      background: #fca5a5;
+      color: #7f1d1d;
+      font-weight: 700;
+      text-decoration: line-through;
+      padding: 1px 3px;
+      border-radius: 2px;
+    }
+
+    /* Semantic 3-Step Instruction Bar */
+    .action-steps-bar {
+      padding: 16px 20px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .action-steps-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .action-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: #1e40af;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-title {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .step-text p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Long-Form Knowledge Base */
+    .article-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 40px;
+      content-visibility: auto;
+      contain-intrinsic-size: 1000px 1800px;
+    }
+
+    @media (max-width: 600px) {
+      .article-container {
+        padding: 24px 18px;
+      }
+    }
+
+    .article-container h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 36px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+      position: relative;
+    }
+
+    .article-container h2::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .article-container h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .article-container h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 24px 0 12px;
+      color: #1e293b;
+    }
+
+    .article-container p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .article-container ul, .article-container ol {
+      margin: 0 0 24px 24px;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+    }
+
+    .article-container li {
+      margin-bottom: 10px;
+    }
+
+    .highlight-card {
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      margin: 24px 0;
+      color: #1e3a8a;
+      font-size: 1rem;
+    }
+
+    /* Comparison Table in Article */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 24px 0;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    table.content-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    table.content-table thead {
+      background: #f1f5f9;
+    }
+
+    table.content-table th, table.content-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.content-table th {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    table.content-table tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    /* FAQ Accordion */
+    .faq-block {
+      margin-top: 24px;
+    }
+
+    .faq-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      background: #f8fafc;
+    }
+
+    .faq-header {
+      padding: 16px 20px;
+      font-weight: 700;
+      font-size: 1.02rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      color: var(--text);
+    }
+
+    .faq-header:hover {
+      color: var(--primary);
+    }
+
+    .faq-body {
+      padding: 0 20px 16px;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.7;
+    }
+
+    .faq-card.open {
+      background: var(--surface);
+      border-color: var(--primary);
+    }
+
+    .faq-card.open .faq-body {
+      display: block;
+    }
+
+    .faq-toggle {
+      font-size: 1.3rem;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .faq-card.open .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-xl);
+      transition: transform 0.25s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    #toast.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 28px 16px;
+      margin-top: auto;
+    }
+
+    .footer-wrap {
+      max-width: 1050px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .footer-nav a {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-inner">
+      <a href="https://ahmedelazabdev.github.io/textcompare/" class="brand">
+        <span class="brand-badge">⚖️</span>
+        <span>Text Compare</span>
+      </a>
+      <span class="status-tag">Live Diff Checker</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Text Compare ⚡ <span>Online Diff Checker</span> &amp; Difference Tool</h1>
+      <p>Compare two text snippets, code blocks, or document revisions in real-time. Highlights additions, deletions, and inline modifications with line-by-line and word-level precision with 100% in-browser privacy.</p>
+    </section>
+
+    <!-- Main Comparison Card -->
+    <section class="compare-card" id="diff-app">
+      <div class="card-topbar">
+        <div class="topbar-modes">
+          <button class="tab-btn active" id="tab-side" onclick="setViewMode('side')">⫿ Side-by-Side</button>
+          <button class="tab-btn" id="tab-inline" onclick="setViewMode('inline')">☰ Inline Unified</button>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn-topbar" onclick="loadSampleText()">
+            <span>✨ Load Sample</span>
+          </button>
+          <button class="btn-topbar" onclick="swapTexts()">
+            <span>⇄ Swap Texts</span>
+          </button>
+          <button class="btn-topbar btn-primary-action" onclick="copyDiffReport()">
+            <span>📋 Copy Diff</span>
+          </button>
+          <button class="btn-topbar" onclick="clearAll()">
+            <span>✖ Clear</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Options Strip -->
+      <div class="options-strip">
+        <div class="opt-group">
+          <label class="opt-item" for="chk-ignore-case">
+            <input type="checkbox" id="chk-ignore-case" onchange="runDiff()">
+            <span>Ignore Case</span>
+          </label>
+          <label class="opt-item" for="chk-ignore-whitespace">
+            <input type="checkbox" id="chk-ignore-whitespace" onchange="runDiff()">
+            <span>Ignore Whitespace</span>
+          </label>
+          <label class="opt-item" for="chk-word-diff">
+            <input type="checkbox" id="chk-word-diff" checked onchange="runDiff()">
+            <span>Word-Level Inline Highlights</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Dual Textarea Inputs -->
+      <div class="input-grid">
+        <!-- Original Text (Text 1) -->
+        <div class="input-pane">
+          <div class="pane-header">
+            <label for="text-orig">Original Text (Before):</label>
+            <span class="pane-stats" id="stats-orig">0 lines • 0 words</span>
+          </div>
+          <textarea id="text-orig" class="text-box" placeholder="Paste your original text or code here..." oninput="runDiff()" aria-label="Original text to compare"></textarea>
+        </div>
+
+        <!-- Modified Text (Text 2) -->
+        <div class="input-pane">
+          <div class="pane-header">
+            <label for="text-mod">Modified Text (After):</label>
+            <span class="pane-stats" id="stats-mod">0 lines • 0 words</span>
+          </div>
+          <textarea id="text-mod" class="text-box" placeholder="Paste your modified text or code here..." oninput="runDiff()" aria-label="Modified text to compare"></textarea>
+        </div>
+      </div>
+
+      <!-- Telemetry Metrics Ribbon -->
+      <div class="metrics-ribbon">
+        <div class="metric-cell">
+          <span class="metric-label">Similarity Score</span>
+          <span class="metric-val val-blue" id="stat-similarity">100%</span>
+        </div>
+        <div class="metric-cell">
+          <span class="metric-label">Additions (+)</span>
+          <span class="metric-val val-green" id="stat-additions">+0 lines</span>
+        </div>
+        <div class="metric-cell">
+          <span class="metric-label">Deletions (-)</span>
+          <span class="metric-val val-red" id="stat-deletions">-0 lines</span>
+        </div>
+        <div class="metric-cell">
+          <span class="metric-label">Total Differences</span>
+          <span class="metric-val" id="stat-diff-count">0</span>
+        </div>
+      </div>
+
+      <!-- Visual Diff View Output -->
+      <div class="diff-output-container">
+        <div id="diff-output-box" class="diff-view-table" aria-label="Visual difference comparison output">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+
+      <!-- Semantic 3-Step Instruction Bar (No h4 skips) -->
+      <div class="action-steps-bar">
+        <div class="action-step">
+          <span class="step-num">1</span>
+          <div class="step-text">
+            <strong class="step-title">Paste Two Documents</strong>
+            <p>Insert your original draft into the left pane and the updated version into the right pane.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <span class="step-num">2</span>
+          <div class="step-text">
+            <strong class="step-title">Customize Sensitivity</strong>
+            <p>Toggle case-insensitivity, whitespace trimming, or word-level highlighting based on your needs.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <span class="step-num">3</span>
+          <div class="step-text">
+            <strong class="step-title">Inspect &amp; Export</strong>
+            <p>Examine additions in green and deletions in red, or export the audit report with one click.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comprehensive Technical Knowledge Base & Guide -->
+    <article class="article-container">
+      <h2>What is a Text Compare Tool and How Does Diff Checking Work?</h2>
+      <p>
+        A <strong>Text Compare</strong> tool (commonly known as a <em>diff checker</em>) is an algorithmic utility designed to compute the difference between two sequences of text. In modern software engineering, publishing, and legal contracts, computing the delta ($\Delta$) between text versions is essential to verify changes, prevent regressions, and audit modifications.
+      </p>
+
+      <div class="highlight-card">
+        <strong>💡 The Core Objective:</strong> A diff algorithm determines the minimal set of edit operations (insertions, deletions, and modifications) required to transform one string into another, highlighting exactly what changed without forcing readers to manually re-read identical lines.
+      </div>
+
+      <h2>The Mathematics of Diff Algorithms: Myers, Levenshtein, and LCS</h2>
+      <p>
+        High-performance text comparison relies on foundational computer science principles:
+      </p>
+      <ol>
+        <li><strong>Longest Common Subsequence (LCS):</strong> The algorithm searches for the longest sequence of words or lines that appear in both texts in the same order. Everything not part of the LCS is flagged as either an insertion or deletion.</li>
+        <li><strong>Eugene Myers' Difference Algorithm (1986):</strong> Myers modeled the diff problem as finding the shortest path on a directed edit graph. By searching paths with minimal edit distance $D$, Myers' algorithm runs in $O(ND)$ time, making it the industry standard behind <strong>Git diff</strong> and Linux command-line utilities.</li>
+        <li><strong>Levenshtein Edit Distance:</strong> Measures the mathematical similarity between two texts based on single-character insertions, substitutions, and deletions. This metric powers the <strong>Similarity Percentage</strong> shown in our telemetry bar above.</li>
+      </ol>
+
+      <h2>Side-by-Side vs. Unified Inline Diff: Which Should You Use?</h2>
+      <p>
+        Choosing the right view mode depends on your document type and reading environment:
+      </p>
+      <ul>
+        <li><strong>Side-by-Side (Split View):</strong> Displays the original and modified documents in parallel two-column format. This is the optimal view for reviewing legal contracts, academic essays, and prose where side-by-side alignment preserves context across whole paragraphs.</li>
+        <li><strong>Inline (Unified View):</strong> Stacks all lines into a single vertical stream, displaying deletions in red (prefixed with <code>-</code>) immediately followed by additions in green (prefixed with <code>+</code>). This is the standard layout used in GitHub pull requests and patch files.</li>
+      </ul>
+
+      <h2>Comparison Table: Text Comparison &amp; Diff Tools Compared</h2>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Platform / Install</th>
+              <th>Privacy &amp; Data Handling</th>
+              <th>Granularity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Online Text Compare (This Tool)</strong></td>
+              <td>Browser / Zero Install</td>
+              <td>100% Client-Side (No server upload)</td>
+              <td>Line, Word, &amp; Substring highlights</td>
+            </tr>
+            <tr>
+              <td><strong>Git Diff CLI</strong></td>
+              <td>Terminal / Local Git repo</td>
+              <td>Local filesystem only</td>
+              <td>Line-level &amp; hunk based</td>
+            </tr>
+            <tr>
+              <td><strong>Desktop Diff (Beyond Compare / WinMerge)</strong></td>
+              <td>Heavy Desktop Software ($$$)</td>
+              <td>Local filesystem</td>
+              <td>Directory &amp; Binary level</td>
+            </tr>
+            <tr>
+              <td><strong>Cloud Word Processors (Track Changes)</strong></td>
+              <td>SaaS Account Required</td>
+              <td>Stored on remote cloud servers</td>
+              <td>User keystroke history</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Practical Use Cases Across Industries</h2>
+      <ul>
+        <li><strong>Software Engineering &amp; Code Review:</strong> Inspect configuration changes (JSON, YAML, .env files), verify API payloads, and debug code differences without needing Git commits.</li>
+        <li><strong>Legal Contracts &amp; Redlining:</strong> Detect subtle alterations in clauses, payment terms, or non-disclosure agreements (NDAs) before signing.</li>
+        <li><strong>SEO &amp; Content Publishing:</strong> Verify that content updates retain target keywords and review editor revisions across blog drafts.</li>
+        <li><strong>Academic Research &amp; Plagiarism Audits:</strong> Compare student revisions against earlier drafts to track legitimate edits.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-block">
+        <div class="faq-card">
+          <div class="faq-header" onclick="toggleFaqCard(this)">
+            <span>Can I compare code snippets as well as plain English text?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-body">
+            Yes! Text Compare works with any text-based format including JavaScript, Python, C++, HTML, CSS, JSON, SQL, and Markdown. Whitespace and indentation are preserved.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-header" onclick="toggleFaqCard(this)">
+            <span>Is my confidential text or code uploaded to any server?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-body">
+            No. The entire comparison process executes in your browser's local memory via client-side JavaScript. None of your data, code, or documents are ever transmitted over the network.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-header" onclick="toggleFaqCard(this)">
+            <span>What does the 'Word-Level Inline Highlights' toggle do?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-body">
+            When enabled, lines that have been modified are analyzed word-by-word, applying darker highlight badges to the specific words that were inserted or deleted rather than highlighting the entire line uniformly.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-header" onclick="toggleFaqCard(this)">
+            <span>How is the similarity percentage calculated?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-body">
+            The similarity percentage is calculated by dividing the length of the Longest Common Subsequence (matching content) by the total character count of the longer document, scaled from 0% (completely different) to 100% (identical).
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast">Ready!</div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-wrap">
+      <p>© <span id="current-year"></span> All rights reserved — Text Compare Online Diff Utility.</p>
+      <div class="footer-nav">
+        <a href="#diff-app">Text Compare Tool</a>
+        <a href="https://1io-site.blogspot.com" target="_blank" rel="noopener">By: 1io.site</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Instant Client-Side Diff Engine -->
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    let viewMode = 'side'; // 'side' or 'inline'
+
+    const textOrig = document.getElementById('text-orig');
+    const textMod = document.getElementById('text-mod');
+    const outputBox = document.getElementById('diff-output-box');
+
+    const sampleOriginal = `// User Authentication Service
+function authenticateUser(username, password) {
+    if (!username || !password) {
+        return { success: false, error: "Missing credentials" };
+    }
+
+    const user = Database.findUser(username);
+    if (!user) {
+        return { success: false, error: "User not found" };
+    }
+
+    const isValid = Hash.verify(password, user.passwordHash);
+    if (!isValid) {
+        return { success: false, error: "Invalid password" };
+    }
+
+    return { success: true, token: Token.generate(user.id) };
+}`;
+
+    const sampleModified = `// User Authentication Service (v2.0)
+function authenticateUser(username, password, mfaCode) {
+    if (!username || !password) {
+        throw new Error("Missing username or password");
+    }
+
+    const user = await Database.findUserByUsername(username);
+    if (!user) {
+        return { success: false, error: "User not found" };
+    }
+
+    const isValid = await Argon2.verify(user.passwordHash, password);
+    if (!isValid) {
+        Logger.warn("Failed login attempt for: " + username);
+        return { success: false, error: "Invalid credentials" };
+    }
+
+    return { 
+        success: true, 
+        token: JWT.sign({ id: user.id, role: user.role }) 
+    };
+}`;
+
+    function loadSampleText() {
+      textOrig.value = sampleOriginal;
+      textMod.value = sampleModified;
+      runDiff();
+      showToast('✨ Loaded sample code comparison');
+    }
+
+    function swapTexts() {
+      const temp = textOrig.value;
+      textOrig.value = textMod.value;
+      textMod.value = temp;
+      runDiff();
+      showToast('⇄ Texts swapped');
+    }
+
+    function clearAll() {
+      textOrig.value = '';
+      textMod.value = '';
+      runDiff();
+      showToast('Cleared input texts');
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      document.getElementById('tab-side').classList.toggle('active', mode === 'side');
+      document.getElementById('tab-inline').classList.toggle('active', mode === 'inline');
+      runDiff();
+    }
+
+    // Longest Common Subsequence (LCS) Diff Algorithm
+    function computeLCS(a, b, comparator) {
+      const m = a.length;
+      const n = b.length;
+      const dp = Array.from({ length: m + 1 }, () => new Uint16Array(n + 1));
+
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          if (comparator(a[i - 1], b[j - 1])) {
+            dp[i][j] = dp[i - 1][j - 1] + 1;
+          } else {
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+          }
+        }
+      }
+
+      // Backtrack to find diff ops
+      let i = m, j = n;
+      const diff = [];
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && comparator(a[i - 1], b[j - 1])) {
+          diff.push({ type: 'equal', val: a[i - 1] });
+          i--;
+          j--;
+        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+          diff.push({ type: 'add', val: b[j - 1] });
+          j--;
+        } else if (i > 0 && (j === 0 || dp[i][j - 1] < dp[i - 1][j])) {
+          diff.push({ type: 'del', val: a[i - 1] });
+          i--;
+        }
+      }
+      return diff.reverse();
+    }
+
+    // Word-level token diffing
+    function diffWords(oldStr, newStr) {
+      const tokenize = s => s.split(/(\s+|[^\w\s])/).filter(Boolean);
+      const w1 = tokenize(oldStr);
+      const w2 = tokenize(newStr);
+      return computeLCS(w1, w2, (a, b) => a === b);
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function runDiff() {
+      const origRaw = textOrig.value;
+      const modRaw = textMod.value;
+
+      const ignoreCase = document.getElementById('chk-ignore-case').checked;
+      const ignoreWhitespace = document.getElementById('chk-ignore-whitespace').checked;
+      const wordDiffEnabled = document.getElementById('chk-word-diff').checked;
+
+      // Update Input Pane Stats
+      const oLines = origRaw ? origRaw.split('\n').length : 0;
+      const oWords = origRaw.trim() ? origRaw.trim().split(/\s+/).length : 0;
+      const mLines = modRaw ? modRaw.split('\n').length : 0;
+      const mWords = modRaw.trim() ? modRaw.trim().split(/\s+/).length : 0;
+
+      document.getElementById('stats-orig').textContent = `${oLines} lines • ${oWords} words`;
+      document.getElementById('stats-mod').textContent = `${mLines} lines • ${mWords} words`;
+
+      if (!origRaw && !modRaw) {
+        outputBox.innerHTML = '<div style="padding:30px; text-align:center; color:var(--text-muted);">Paste text above to compare differences.</div>';
+        updateTelemetry(0, 0, 100);
+        return;
+      }
+
+      const linesA = origRaw.split('\n');
+      const linesB = modRaw.split('\n');
+
+      const lineComparator = (l1, l2) => {
+        let a = l1;
+        let b = l2;
+        if (ignoreCase) {
+          a = a.toLowerCase();
+          b = b.toLowerCase();
+        }
+        if (ignoreWhitespace) {
+          a = a.trim().replace(/\s+/g, ' ');
+          b = b.trim().replace(/\s+/g, ' ');
+        }
+        return a === b;
+      };
+
+      const diffOps = computeLCS(linesA, linesB, lineComparator);
+
+      let addCount = 0;
+      let delCount = 0;
+      let equalCount = 0;
+      let html = '';
+
+      let lineNumA = 1;
+      let lineNumB = 1;
+
+      if (viewMode === 'side') {
+        // Parallel Side-by-Side rendering
+        html = '<div style="display:flex; flex-direction:column; width:100%;">';
+        
+        let i = 0;
+        while (i < diffOps.length) {
+          const op = diffOps[i];
+
+          if (op.type === 'equal') {
+            html += `
+              <div class="diff-row" style="background:#ffffff;">
+                <div class="diff-line-num">${lineNumA}</div>
+                <div class="diff-text-cell" style="width:50%; border-right:1px solid #e2e8f0;">${escapeHtml(op.val)}</div>
+                <div class="diff-line-num">${lineNumB}</div>
+                <div class="diff-text-cell" style="width:50%;">${escapeHtml(op.val)}</div>
+              </div>
+            `;
+            lineNumA++;
+            lineNumB++;
+            equalCount++;
+            i++;
+          } else if (op.type === 'del') {
+            // Check if immediately followed by an 'add' (modification pair)
+            const nextOp = diffOps[i + 1];
+            if (nextOp && nextOp.type === 'add') {
+              let cellA = escapeHtml(op.val);
+              let cellB = escapeHtml(nextOp.val);
+
+              if (wordDiffEnabled) {
+                const wDiff = diffWords(op.val, nextOp.val);
+                cellA = wDiff.map(w => w.type === 'del' ? `<span class="diff-inline-delete">${escapeHtml(w.val)}</span>` : (w.type === 'equal' ? escapeHtml(w.val) : '')).join('');
+                cellB = wDiff.map(w => w.type === 'add' ? `<span class="diff-inline-insert">${escapeHtml(w.val)}</span>` : (w.type === 'equal' ? escapeHtml(w.val) : '')).join('');
+              }
+
+              html += `
+                <div class="diff-row">
+                  <div class="diff-line-num" style="background:#fee2e2; color:#991b1b;">${lineNumA}</div>
+                  <div class="diff-text-cell diff-del" style="width:50%; border-right:1px solid #fecaca;">${cellA || '&nbsp;'}</div>
+                  <div class="diff-line-num" style="background:#dcfce7; color:#14532d;">${lineNumB}</div>
+                  <div class="diff-text-cell diff-add" style="width:50%;">${cellB || '&nbsp;'}</div>
+                </div>
+              `;
+              delCount++;
+              addCount++;
+              lineNumA++;
+              lineNumB++;
+              i += 2;
+            } else {
+              html += `
+                <div class="diff-row">
+                  <div class="diff-line-num" style="background:#fee2e2; color:#991b1b;">${lineNumA}</div>
+                  <div class="diff-text-cell diff-del" style="width:50%; border-right:1px solid #fecaca;">${escapeHtml(op.val) || '&nbsp;'}</div>
+                  <div class="diff-line-num">&nbsp;</div>
+                  <div class="diff-text-cell" style="width:50%; background:#fafafa;">&nbsp;</div>
+                </div>
+              `;
+              delCount++;
+              lineNumA++;
+              i++;
+            }
+          } else if (op.type === 'add') {
+            html += `
+              <div class="diff-row">
+                <div class="diff-line-num">&nbsp;</div>
+                <div class="diff-text-cell" style="width:50%; border-right:1px solid #e2e8f0; background:#fafafa;">&nbsp;</div>
+                <div class="diff-line-num" style="background:#dcfce7; color:#14532d;">${lineNumB}</div>
+                <div class="diff-text-cell diff-add" style="width:50%;">${escapeHtml(op.val) || '&nbsp;'}</div>
+              </div>
+            `;
+            addCount++;
+            lineNumB++;
+            i++;
+          }
+        }
+        html += '</div>';
+
+      } else {
+        // Unified Inline Git-Style Diff
+        html = '<div style="display:flex; flex-direction:column; width:100%;">';
+        diffOps.forEach(op => {
+          if (op.type === 'equal') {
+            html += `
+              <div class="diff-row" style="background:#ffffff;">
+                <div class="diff-line-num">${lineNumA}</div>
+                <div class="diff-line-num">${lineNumB}</div>
+                <div class="diff-text-cell"><span style="color:#94a3b8; user-select:none; margin-right:8px;"> </span>${escapeHtml(op.val)}</div>
+              </div>
+            `;
+            lineNumA++;
+            lineNumB++;
+            equalCount++;
+          } else if (op.type === 'del') {
+            html += `
+              <div class="diff-row diff-del">
+                <div class="diff-line-num" style="background:#fecaca; color:#991b1b;">${lineNumA}</div>
+                <div class="diff-line-num" style="background:#fee2e2;">-</div>
+                <div class="diff-text-cell"><span style="color:#991b1b; font-weight:800; user-select:none; margin-right:8px;">-</span>${escapeHtml(op.val)}</div>
+              </div>
+            `;
+            delCount++;
+            lineNumA++;
+          } else if (op.type === 'add') {
+            html += `
+              <div class="diff-row diff-add">
+                <div class="diff-line-num" style="background:#dcfce7;">+</div>
+                <div class="diff-line-num" style="background:#bbf7d0; color:#14532d;">${lineNumB}</div>
+                <div class="diff-text-cell"><span style="color:#14532d; font-weight:800; user-select:none; margin-right:8px;">+</span>${escapeHtml(op.val)}</div>
+              </div>
+            `;
+            addCount++;
+            lineNumB++;
+          }
+        });
+        html += '</div>';
+      }
+
+      outputBox.innerHTML = html;
+
+      // Calculate Similarity Percentage
+      const maxLines = Math.max(linesA.length, linesB.length) || 1;
+      const similarity = Math.round((equalCount / maxLines) * 100);
+      updateTelemetry(addCount, delCount, similarity);
+    }
+
+    function updateTelemetry(additions, deletions, similarity) {
+      document.getElementById('stat-additions').textContent = `+${additions} lines`;
+      document.getElementById('stat-deletions').textContent = `-${deletions} lines`;
+      document.getElementById('stat-diff-count').textContent = additions + deletions;
+      document.getElementById('stat-similarity').textContent = `${similarity}%`;
+    }
+
+    function copyDiffReport() {
+      const orig = textOrig.value;
+      const mod = textMod.value;
+      if (!orig && !mod) return;
+
+      const adds = document.getElementById('stat-additions').textContent;
+      const dels = document.getElementById('stat-deletions').textContent;
+      const sim = document.getElementById('stat-similarity').textContent;
+
+      let report = `=================================\n`;
+      report += `      TEXT COMPARISON REPORT     \n`;
+      report += `=================================\n`;
+      report += `Date: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}\n`;
+      report += `Similarity Score: ${sim}\n`;
+      report += `Additions: ${adds}\n`;
+      report += `Deletions: ${dels}\n`;
+      report += `---------------------------------\n`;
+      report += `ORIGINAL TEXT:\n${orig}\n\n`;
+      report += `MODIFIED TEXT:\n${mod}\n`;
+      report += `=================================\n`;
+
+      navigator.clipboard.writeText(report).then(() => {
+        showToast('📋 Diff report copied to clipboard!');
+      }).catch(() => {
+        showToast('Report copied!');
+      });
+    }
+
+    function toggleFaqCard(header) {
+      header.parentElement.classList.toggle('open');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('active');
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 3000);
+    }
+
+    // Preload sample on page load with zero CLS
+    loadSampleText();
+  </script>
+</body>
+</html>
